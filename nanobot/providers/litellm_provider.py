@@ -211,8 +211,8 @@ class LiteLLMProvider(LLMProvider):
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
         model: str | None = None,
-        max_tokens: int = 4096,
-        temperature: float = 0.7,
+        max_tokens: int = 16000,
+        temperature: float = 0.6,
         reasoning_effort: str | None = None,
     ) -> LLMResponse:
         """
