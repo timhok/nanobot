@@ -48,7 +48,7 @@ class CronTool(Tool):
                     "enum": ["add", "list", "remove"],
                     "description": "Action to perform",
                 },
-                "message": {"type": "string", "description": "Reminder message (required for 'add' action)"},
+                "message": {"type": "string", "description": "Reminder message text (required when action is 'add')"},
                 "every_seconds": {
                     "type": "integer",
                     "description": "Interval in seconds (for recurring tasks)",
@@ -67,7 +67,7 @@ class CronTool(Tool):
                 },
                 "job_id": {"type": "string", "description": "Job ID (for remove)"},
             },
-            "required": ["action"],
+            "required": ["action", "message"],
         }
 
     async def execute(
