@@ -98,6 +98,7 @@ class MemoryStore:
         messages: list[dict],
         provider: LLMProvider,
         model: str,
+        temperature: float = 0.1,
     ) -> bool:
         """Consolidate the provided message chunk into MEMORY.md + HISTORY.md."""
         if not messages:
@@ -123,6 +124,7 @@ class MemoryStore:
                 tools=_SAVE_MEMORY_TOOL,
                 model=model,
                 tool_choice={"type": "function", "function": {"name": "save_memory"}},
+                temperature=temperature,
             )
 
             if not response.has_tool_calls:
