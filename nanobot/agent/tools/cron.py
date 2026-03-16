@@ -48,7 +48,7 @@ class CronTool(Tool):
                     "enum": ["add", "list", "remove"],
                     "description": "Action to perform",
                 },
-                "message": {"type": "string", "description": "Reminder message (for add)"},
+                "message": {"type": "string", "description": "Reminder message text (required when action is 'add')"},
                 "every_seconds": {
                     "type": "integer",
                     "description": "Interval in seconds (for recurring tasks)",
@@ -67,7 +67,7 @@ class CronTool(Tool):
                 },
                 "job_id": {"type": "string", "description": "Job ID (for remove)"},
             },
-            "required": ["action"],
+            "required": ["action", "message"],
         }
 
     async def execute(
@@ -100,7 +100,7 @@ class CronTool(Tool):
         at: str | None,
     ) -> str:
         if not message:
-            return "Error: message is required for add"
+            return "Error: message is required for 'add'. Example: cron(action='add', message='...', at='...')"
         if not self._channel or not self._chat_id:
             return "Error: no session context (channel/chat_id)"
         if tz and not cron_expr:
