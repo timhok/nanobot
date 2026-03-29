@@ -354,7 +354,7 @@ class TestMemoryConsolidationTypeHandling:
 
     @pytest.mark.asyncio
     async def test_consolidation_delegates_to_provider_defaults(self, tmp_path: Path) -> None:
-        """Consolidation no longer passes generation params — the provider owns them."""
+        """Consolidation passes a low temperature for deterministic summaries."""
         store = MemoryStore(tmp_path)
         provider = AsyncMock()
         provider.chat_with_retry = AsyncMock(
@@ -371,7 +371,7 @@ class TestMemoryConsolidationTypeHandling:
         provider.chat_with_retry.assert_awaited_once()
         _, kwargs = provider.chat_with_retry.await_args
         assert kwargs["model"] == "test-model"
-        assert "temperature" not in kwargs
+        assert kwargs["temperature"] == 0.1
         assert "max_tokens" not in kwargs
         assert "reasoning_effort" not in kwargs
 
